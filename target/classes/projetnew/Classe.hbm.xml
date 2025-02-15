@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="projetnew.Classe" optimistic-lock="none" schema="public" table="classe">
+        <id name="idclasse" type="int">
+            <column name="idclasse"/>
+            <generator class="assigned"/>
+        </id>
+        <property name="code" type="string">
+            <column length="50" name="code" not-null="true" unique="true"/>
+        </property>
+        <property name="nom" type="string">
+            <column length="100" name="nom" not-null="true"/>
+        </property>
+        <property name="niveau" type="string">
+            <column length="50" name="niveau" not-null="true"/>
+        </property>
+        <set fetch="select" inverse="true" lazy="true" name="enseignants" table="enseignant_classe">
+            <key>
+                <column name="idclasse" not-null="true"/>
+            </key>
+            <many-to-many entity-name="projetnew.Enseignant">
+                <column name="idens" not-null="true"/>
+            </many-to-many>
+        </set>
+        <set fetch="select" inverse="true" lazy="true" name="etudiants" table="etudiant_classe">
+            <key>
+                <column name="idclasse" not-null="true"/>
+            </key>
+            <many-to-many entity-name="projetnew.Etudiant">
+                <column name="idetud" not-null="true"/>
+            </many-to-many>
+        </set>
+        <set fetch="select" inverse="false" lazy="true" name="courses" table="classe_cours">
+            <key>
+                <column name="idclasse" not-null="true"/>
+            </key>
+            <many-to-many entity-name="projetnew.Cours">
+                <column name="idcours" not-null="true"/>
+            </many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>

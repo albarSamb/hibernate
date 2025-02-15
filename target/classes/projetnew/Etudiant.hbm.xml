@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="projetnew.Etudiant" optimistic-lock="none" schema="public" table="etudiant">
+        <id name="idetud" type="int">
+            <column name="idetud"/>
+            <generator class="assigned"/>
+        </id>
+        <many-to-one class="projetnew.Personne" fetch="select" name="personne">
+            <column name="idpers" unique="true"/>
+        </many-to-one>
+        <property name="numerocarte" type="string">
+            <column length="50" name="numerocarte" not-null="true" unique="true"/>
+        </property>
+        <set fetch="select" inverse="false" lazy="true" name="classes" table="etudiant_classe">
+            <key>
+                <column name="idetud" not-null="true"/>
+            </key>
+            <many-to-many entity-name="projetnew.Classe">
+                <column name="idclasse" not-null="true"/>
+            </many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>
